@@ -1,0 +1,242 @@
+#A CLASS DEFINES DATA FORMAT AND PROCEDURE FOR HANDLING THAT DATA
+#INIT IS USED FOR DEFINEING NEWELY CREATED OBEJECTS TO SET ITS VALUES
+#SELF IS AN INSTANCE OF CLASS WHIC IS USED TO REPRESENT ATTRIBUTES OF CLASS
+
+#MEMBERS DETAILS
+class Member:
+    def __init__(self, name, age, gender, email, phone):
+        self.name = name
+        self.age = age
+        self.gender = gender
+        self.email = email
+        self.phone = phone
+
+#TRAINER DETAILS
+class Trainer:
+    def __init__(self, name, expertise):
+        self.name = name
+        self.expertise = expertise
+
+#MEMBERSHIP PLAN AND ITS DETAIL
+class MembershipPlan:
+    def __init__(self, name, description, price):
+        self.name = name
+        self.description = description
+        self.price = price
+
+#VARIOUS DIET PLAN AND ITS DESCRIPTION
+class DietPlan:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+#DIRECTIONS TO THE GYM
+class Direction:
+    def __init__(self, area, instructions):
+        self.area = area
+        self.instructions = instructions
+
+#USER DEATILS
+class User:
+    def __init__(self, user_id, password):
+        self.user_id = user_id
+        self.password = password
+
+#ASKS THE USER TO LOGIN BEFORE ACCESSSING DETAILS OF THE GYM
+def login():
+    print("Please log in to access the system.")
+    user_id = input("Enter user ID: ")
+    password = input("Enter password: ")
+
+    #CHECKS IF VALID CREDENTIALS
+    for user in users:
+        if user.user_id == user_id and user.password == password:
+            print("Login successful!")
+            return True
+    print("Invalid user ID or password.")
+    return False
+
+#FOR ADDING USERNAME AND PASSWORD
+def add_user():
+    user_id = input("Enter user ID: ")
+    password = input("Enter password: ")
+    #APPEND FUCNTION ADDS ELEMENTS TO THE END OF THE LIST
+    users.append(User(user_id, password))
+    print("User added successfully!")
+
+
+def add_member():
+    if login():
+        name = input("Enter member's name: ")
+        while not name.isalpha():
+            print("Name must be in alphabets.")
+            name = input("Enter member's name: ")
+
+        age = input("Enter member's age: ")
+        while not age.isdigit():
+            print("Age must be a number.")
+            age = input("Enter member's age: ")
+
+        gender = input("Enter member's gender: ")
+        while not gender.isalpha():
+            print("Gender must be in alphabets.")
+            gender = input("Enter member's gender: ")
+
+        email = input("Enter member's email: ")
+
+        phone = input("Enter member's phone number: ")
+        while not phone.isdigit():
+            print("Phone must be a number.")
+            phone = input("Enter member's phone number: ")
+
+        members.append(Member(name, age, gender, email, phone))
+        print("Member added successfully!")
+
+#ADDS TRAINER DETAILS AND ONLY ALLOWS ACESS AFTER LOGIN
+def add_trainer():
+    if login():
+        name = input("Enter trainer's name: ")
+        expertise = input("Enter trainer's expertise: ")
+        trainers.append(Trainer(name, expertise))
+        print("Trainer added successfully!")
+
+#ADDS MEMEBERSHIP PLANS AND ONLY ALLOWS ACESS AFTER LOGIN
+def add_membership_plan():
+    if login():
+        name = input("Enter membership plan name: ")
+        description = input("Enter membership plan description: ")
+        price = input("Enter membership plan price: ")
+        membership_plans.append(MembershipPlan(name, description, price))
+        print("Membership plan added successfully!")
+
+#SHOWS DIET PLANS AND ONLY ALLOWS ACESS AFTER LOGIN
+def add_diet_plan():
+    if login():
+        print("Choose a diet plan:")
+        print("1. Keto Diet")
+        print("2. Intermittent Fasting")
+        print("3. Vegan Bulking")
+        print("4. Mediterranean Diet")
+        choice = input("Enter your choice (1/2/3/4): ")
+
+        if choice == '1':
+            name = "Keto Diet"
+            description = "A high-fat, low-carbohydrate diet that has been claimed to help with weight loss and various health conditions."
+        elif choice == '2':
+            name = "Intermittent Fasting"
+            description = "An eating pattern where you cycle between periods of eating and fasting. It has been used for weight loss and improved health."
+        elif choice == '3':
+            name = "Vegan Bulking"
+            description = "A plant-based diet aimed at gaining muscle mass while following vegan principles."
+        elif choice == '4':
+            name = "Mediterranean Diet"
+            description = "A diet inspired by the eating habits of people living in the Mediterranean region. It emphasizes fruits, vegetables, whole grains, fish, and olive oil."
+        else:
+            print("Invalid choice.")
+            return
+        #ADDINNG ELEMNTS TO LIST
+        diet_plans.append(DietPlan(name, description))
+        print("Diet plan added successfully!")
+
+#SHOWS DIRECTIONS ONLY ALLOWS ACESS AFTER LOGIN
+def add_directions():
+    if login():
+        area = input("Enter area name (e.g., Weightlifting Section, Cardio Area, etc.): ")
+        instructions = input("Enter directions/instructions for that area: ")
+        directions.append(Direction(area, instructions))
+        print("Directions added successfully!")
+
+
+def display_info(info_type):
+    if info_type == "members":
+        print("\n--- Members ---")
+        for member in members:
+            print(
+                f"Name: {member.name}, Age: {member.age}, Gender: {member.gender}, Email: {member.email}, Phone: {member.phone}")
+    elif info_type == "trainers":
+        print("\n--- Trainers ---")
+        for trainer in trainers:
+            print(f"Name: {trainer.name}, Expertise: {trainer.expertise}")
+    elif info_type == "membership_plans":
+        print("\n--- Membership Plans ---")
+        for plan in membership_plans:
+            print(f"Name: {plan.name}, Description: {plan.description}, Price: {plan.price}")
+    else:
+        print("Invalid info type.")
+
+
+def display_diet_plans():
+    print("\n--- Diet Plans ---")
+    for plan in diet_plans:
+        print(f"Name: {plan.name}, Description: {plan.description}")
+
+
+def display_directions():
+    print("\n--- Directions in the Gym ---")
+    for direction in directions:
+        print(f"Area: {direction.area}\nInstructions: {direction.instructions}\n")
+
+
+def view_gym_picture():
+    # Replace 'gym_picture.jpg' with the file path or URL of your gym picture
+    gym_picture_path = 'https://www.conceptdraw.com/How-To-Guide/gym-floor-plan'
+    print(f"Viewing gym picture: {gym_picture_path}")
+
+
+def main_menu():
+    while True:
+        print("\n--- Gym Management System ---")
+        print("1. Login")
+        print("2. Add User")
+        print("3. Add Member")
+        print("4. Add Trainer")
+        print("5. Add Membership Plan")
+        print("6. Add Diet Plan")
+        print("7. Add Directions in the Gym")
+        print("8. Display Members, Trainers, and Membership Plans")
+        print("9. Display Diet Plans")
+        print("10. Display Directions in the Gym")
+        print("11. View Gym Picture")
+        print("12. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            login()
+        elif choice == '2':
+            add_user()
+        elif choice == '3':
+            add_member()
+        elif choice == '4':
+            add_trainer()
+        elif choice == '5':
+            add_membership_plan()
+        elif choice == '6':
+            add_diet_plan()
+        elif choice == '7':
+            add_directions()
+        elif choice == '8':
+            display_info("members")
+            display_info("trainers")
+            display_info("membership_plans")
+        elif choice == '9':
+            display_diet_plans()
+        elif choice == '10':
+            display_directions()
+        elif choice == '11':
+            view_gym_picture()
+        elif choice == '12':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    members = []
+    trainers = []
+    membership_plans = []
+    diet_plans = []
+    directions = []
+    users = []
+    main_menu()
